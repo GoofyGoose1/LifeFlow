@@ -226,7 +226,6 @@ function playAmbient() {
         'Rain': 'sounds/rain.mp3',
         'Forest': 'sounds/forest.mp3',
         'Ocean': 'sounds/ocean.mp3',
-        'Cafe': 'sounds/cafe.mp3',
         'Fireplace': 'sounds/fireplace.mp3'
     };
     const keys = Object.keys(sounds);
