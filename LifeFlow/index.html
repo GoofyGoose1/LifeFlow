@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="main.css">
+    <script defer src="main.js"></script>
+    <title>Life Flow</title>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-circle" style="width: 60px; height: 60px; top: 10%; left: 10%; animation-delay: -2s;"></div>
+        <div class="floating-circle" style="width: 80px; height: 80px; top: 20%; right: 15%; animation-delay: -4s;"></div>
+        <div class="floating-circle" style="width: 40px; height: 40px; bottom: 20%; left: 20%; animation-delay: -1s;"></div>
+        <div class="floating-circle" style="width: 100px; height: 100px; bottom: 10%; right: 10%; animation-delay: -3s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">LifeFlow</h1>
+            <p class="tagline">Your Personal Command Center</p>
+        </div>
+
+        <div class="time-display">
+            <div class="current-time" id="currentTime">12:34:56</div>
+            <div class="current-date" id="currentDate">Saturday, July 26, 2025</div>
+        </div>
+
+        <div class="quick-actions">
+            <div class="quick-action" onclick="breathingExercise()">🧘 Breathe</div>
+            <div class="quick-action" onclick="generateQuote()">💡 Inspire</div>
+            <div class="quick-action" onclick="playAmbient()">🎵 Ambient</div>
+            <div class="quick-action" onclick="stopAmbient()">❌ Stop Ambient</div>
+        </div>
+
+        <div class="dashboard">
+            <!-- TASKS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📋</div>
+                    <h3 class="card-title">Today's Tasks</h3>
+                </div>
+                <div id="todoList">
+                    <!-- Tasks dynamically loaded -->
+                </div>
+                <div class="add-task-container" style="display:flex; gap:10px; margin-top:10px;">
+                    <input type="text" id="newTaskInput" placeholder="Enter new task..." 
+                        style="flex:1; padding:8px; border-radius:8px; border:1px solid #444; background:#222; color:#fff;">
+                    <button class="add-btn" onclick="addTaskFromInput()">Add Task</button>
+                </div>
+            </div>
+
+            <!-- DAILY HABITS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⚡</div>
+                    <h3 class="card-title">Daily Habits</h3>
+                </div>
+                <div id="habitList">
+                    <div class="habit-item">
+                        <div class="checkbox" onclick="toggleHabit(this)"></div>
+                        <span class="task-text">Morning workout</span>
+                          <button class="delete-habit" onclick="deleteHabit(this)">✖</button>
+                    </div>
+                    <div class="habit-item">
+                        <div class="checkbox" onclick="toggleHabit(this)"></div>
+                        <span class="task-text">Read for 30 minutes</span>
+                          <button class="delete-habit" onclick="deleteHabit(this)">✖</button>
+                    </div>
+                    <div class="habit-item">
+                        <div class="checkbox" onclick="toggleHabit(this)"></div>
+                        <span class="task-text">Drink 8 glasses of water</span>
+                          <button class="delete-habit" onclick="deleteHabit(this)">✖</button>
+                    </div>
+                </div>
+                <div class="add-habit-container" style="display:flex; gap:10px; margin-top:10px;">
+                    <input type="text" id="newHabitInput" placeholder="Enter new habit..." 
+                        style="flex:1; padding:8px; border-radius:8px; border:1px solid #444; background:#222; color:#fff;">
+                    <button class="add-btn" onclick="addHabitFromInput()">Add Habit</button>
+                </div>
+                <div style="margin-top: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                        <span>Daily Progress</span>
+                        <span id="habitProgress">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="habitProgressBar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOTES -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📝</div>
+                    <h3 class="card-title">Quick Notes</h3>
+                </div>
+                <textarea 
+                    class="notes-textarea" 
+                    placeholder="Jot down your thoughts, ideas, or reminders..."
+                    id="quickNotes"
+                    onchange="saveNotes()"
+                ></textarea>
+            </div>
+
+            <!-- FOCUS SESSION -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <h3 class="card-title">Focus Session</h3>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 600; margin: 20px 0;" id="focusTimer">25:00</div>
+                    <div style="margin-bottom: 20px; color: #718096;">Pomodoro Timer</div>
+                    <button class="add-btn" onclick="toggleTimer(event)">Start Focus</button>
+                    <div style="margin-top: 15px;">
+                        <button style="background: none; border: 1px solid #444444; color: #cccccc; padding: 8px 16px; border-radius: 20px; margin: 0 5px; cursor: pointer;" onclick="resetTimer()">Reset</button>
+                        <button style="background: none; border: 1px solid #444444; color: #cccccc; padding: 8px 16px; border-radius: 20px; margin: 0 5px; cursor: pointer;" onclick="setBreakTimer()">Break</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCTIVITY INSIGHTS -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Productivity Insights</h3>
+                </div>
+                <div>
+                    <div style="margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>Tasks Completed Today</span>
+                            <span id="taskStats">0/0</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="taskProgressFill" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px;">
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #ffffff;" id="focusTimeDisplay">0.0h</div>
+                            <div style="font-size: 0.8rem; color: #cccccc;">Focus Time</div>
+                        </div>
+                        <div style="text-align: center; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                            <div style="font-size: 1.5rem; font-weight: 600; color: #ffffff;">7</div>
+                            <div style="font-size: 0.8rem; color: #cccccc;">Streak Days</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
